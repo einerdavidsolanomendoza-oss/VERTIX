@@ -2,7 +2,6 @@
 import { useState } from 'react'
 import { Turnstile } from '@marsidev/react-turnstile'
 import { supabase } from '../supabaseClient'
-import './Auth.css'
 
 function Auth() {
   const [mode, setMode] = useState('login')

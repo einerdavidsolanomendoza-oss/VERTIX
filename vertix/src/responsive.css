@@ -1,0 +1,593 @@
+/* =========================================================
+   VÉRTIX — RESPONSIVE
+   Este archivo se importa DESPUÉS de App.css para que sus
+   reglas ganen sobre las reglas antiguas y contradictorias.
+   ========================================================= */
+
+/* ---------- Base ---------- */
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+img,
+svg,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+.auth-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: #c084fc;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* ---------- Menú: icono + etiqueta separados ---------- */
+.menu-icon {
+  width: 18px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.menu-label-short,
+.logo-mini,
+.topbar-brand,
+.mobile-actions {
+  display: none;
+}
+
+/* =========================================================
+   TABLET (768px - 1100px)
+   ========================================================= */
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 210px;
+    min-width: 210px;
+  }
+
+  .main-content {
+    width: calc(100% - 210px);
+    padding: 24px 22px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================================================
+   MÓVIL (hasta 767px)
+   El sidebar pasa a ser una barra inferior de navegación.
+   ========================================================= */
+@media (max-width: 767px) {
+  .app {
+    display: block;
+    min-height: 100dvh;
+  }
+
+  /* --- Sidebar -> bottom nav --- */
+  .sidebar {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    border-right: 0;
+    border-top: 1px solid #29223a;
+    background: rgba(18, 16, 32, 0.97);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .sidebar .logo,
+  .sidebar .menu-title,
+  .sidebar-bottom {
+    display: none;
+  }
+
+  .sidebar nav {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2px;
+  }
+
+  .menu-button {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 52px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 2px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .menu-icon {
+    width: auto;
+    font-size: 21px;
+  }
+
+  /* Anula el viejo truco de ::first-letter que quedó en App.css */
+  .menu-button::first-letter {
+    font-size: inherit;
+  }
+
+  .menu-label {
+    display: none;
+  }
+
+  .menu-label-short {
+    display: block;
+    font-size: 10px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .menu-button.active {
+    background: rgba(168, 85, 247, 0.16);
+    border-color: rgba(168, 85, 247, 0.35);
+    box-shadow: none;
+    color: #e9d5ff;
+  }
+
+  /* --- Contenido --- */
+  .main-content {
+    width: 100%;
+    padding: 16px 14px calc(96px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* --- Topbar --- */
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas:
+      "brand actions profile"
+      "title title title";
+    gap: 10px 12px;
+    padding: 14px;
+    margin-bottom: 18px;
+  }
+
+  .topbar-brand {
+    grid-area: brand;
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+
+  .topbar-brand span,
+  .logo-mini span {
+    color: #b56aff;
+  }
+
+  .topbar-title {
+    grid-area: title;
+  }
+
+  .mobile-actions {
+    grid-area: actions;
+    display: flex;
+    gap: 6px;
+  }
+
+  .profile {
+    grid-area: profile;
+  }
+
+  .mobile-action-button {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: #211a32;
+    border: 1px solid #493263;
+    border-radius: 9px;
+    color: #d8b4fe;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .greeting {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .topbar h1 {
+    font-size: 22px;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .profile-info strong {
+    font-size: 11px;
+  }
+
+  .profile-info p {
+    display: none;
+  }
+
+  /* --- Grids y tarjetas --- */
+  .stats,
+  .finance-stats,
+  .reports-stats,
+  .settings-grid,
+  .content-grid,
+  .business-list,
+  .objectives-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stat-card h2 {
+    font-size: 20px;
+    overflow-wrap: anywhere;
+  }
+
+  .panel {
+    padding: 18px 16px;
+  }
+
+  .welcome {
+    padding: 20px;
+  }
+
+  .welcome h2 {
+    font-size: 20px;
+  }
+
+  .welcome p {
+    font-size: 12px;
+  }
+
+  .welcome-symbol {
+    font-size: 38px;
+    padding: 0;
+  }
+
+  /* --- Encabezados de módulo --- */
+  .dashboard-filter,
+  .business-heading,
+  .objectives-heading,
+  .reports-filter {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: left;
+  }
+
+  .business-heading {
+    position: static;
+    gap: 12px;
+  }
+
+  .business-heading > div {
+    text-align: left;
+  }
+
+  .business-heading .add-business-button {
+    position: static;
+    width: 100%;
+  }
+
+  .dashboard-filter label,
+  .finance-selector label,
+  .reports-filter label {
+    font-size: 11px;
+  }
+
+  .dashboard-filter select,
+  .finance-selector select,
+  .objective-business-selector select,
+  .reports-filter select,
+  .reports-filter .period-filter select,
+  .reports-filter > select {
+    width: 100% !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    font-size: 16px !important;
+  }
+
+  .period-filter,
+  .finance-selector {
+    width: 100%;
+  }
+
+  .finance-actions {
+    justify-content: stretch;
+  }
+
+  .finance-actions .add-business-button {
+    width: 100%;
+  }
+
+  /* --- Formularios (16px evita el zoom automático en iOS) --- */
+  .business-form,
+  .objective-form,
+  .transaction-form {
+    padding: 18px 16px;
+  }
+
+  .business-form input,
+  .business-form textarea,
+  .business-form select,
+  .objective-form input,
+  .objective-form textarea,
+  .task-add-form input,
+  .settings-info input,
+  .settings-info select,
+  .form-actions button {
+    font-size: 16px !important;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  /* --- Tarjetas --- */
+  .business-card,
+  .objective-card,
+  .settings-card {
+    padding: 18px 16px;
+    min-height: 0;
+  }
+
+  .settings-card-header {
+    margin-bottom: 18px;
+  }
+
+  /* --- Movimientos --- */
+  .transaction-row {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "icon info amount"
+      "icon info delete";
+    align-items: center;
+    gap: 4px 10px;
+    padding: 12px;
+  }
+
+  .transaction-icon {
+    grid-area: icon;
+  }
+
+  .transaction-info {
+    grid-area: info;
+  }
+
+  .transaction-row > strong {
+    grid-area: amount;
+    text-align: right;
+    font-size: 12px;
+  }
+
+  .delete-transaction-button {
+    grid-area: delete;
+    justify-self: end;
+  }
+
+  .reports-business-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .reports-business-values {
+    justify-content: flex-start;
+  }
+
+  /* --- Gráficos --- */
+  .chart-placeholder {
+    padding-left: 0;
+    padding-top: 28px;
+    height: 220px;
+  }
+
+  .chart-line {
+    display: none;
+  }
+
+  .chart-legend {
+    top: 0;
+    right: 0;
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+
+  .bars {
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    gap: 4px;
+  }
+
+  .month-columns {
+    height: 135px;
+    gap: 4px;
+  }
+
+  .income-bar,
+  .expense-bar {
+    width: 10px;
+    min-width: 10px;
+    max-width: 10px;
+  }
+
+  .month-group > span {
+    font-size: 9px;
+  }
+
+  .monthly-reports-chart {
+    height: 240px;
+    gap: 5px;
+    padding: 18px 4px 8px;
+  }
+
+  .monthly-report-bars {
+    height: 170px;
+    gap: 4px;
+  }
+
+  .monthly-report-column {
+    width: 12px;
+    min-width: 12px;
+  }
+
+  .monthly-report-group strong {
+    font-size: 9px;
+  }
+
+  .reports-legend {
+    font-size: 11px;
+    gap: 16px;
+  }
+
+  footer {
+    font-size: 9px;
+    line-height: 1.5;
+  }
+
+  /* --- Auth --- */
+  .auth-page {
+    min-height: 100dvh;
+    padding: 24px 14px;
+  }
+
+  .auth-card {
+    padding: 26px 18px;
+    border-radius: 16px;
+  }
+
+  .auth-brand h1 {
+    font-size: 30px;
+  }
+
+  .auth-form > input {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   MÓVIL PEQUEÑO (hasta 480px)
+   ========================================================= */
+@media (max-width: 480px) {
+  .topbar {
+    padding: 12px;
+  }
+
+  .topbar-brand {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+
+  .greeting {
+    font-size: 8px;
+  }
+
+  .topbar h1 {
+    font-size: 20px;
+  }
+
+  .profile-info {
+    display: none;
+  }
+
+  .mobile-action-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stats {
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 18px 16px;
+  }
+
+  .stat-card h2 {
+    font-size: 18px;
+  }
+
+  .menu-icon {
+    font-size: 19px;
+  }
+
+  .menu-label-short {
+    font-size: 9px;
+  }
+
+  .welcome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .welcome-symbol {
+    align-self: flex-end;
+  }
+}
+
+/* =========================================================
+   MÓVIL MUY ESTRECHO (hasta 380px) — el widget de Turnstile
+   mide 300px y no cabe en la tarjeta sin escalarlo.
+   ========================================================= */
+@media (max-width: 380px) {
+  .auth-card {
+    padding: 22px 14px;
+  }
+
+  .auth-brand h1 {
+    font-size: 26px;
+  }
+
+  .auth-heading h2 {
+    font-size: 20px;
+  }
+
+  .auth-captcha {
+    transform: scale(0.85);
+    transform-origin: center top;
+    height: 56px;
+    margin: 6px 0;
+  }
+}

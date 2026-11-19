@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import { supabase } from './supabaseClient'
 import Auth from './componets/Auth'
 
@@ -108,12 +107,20 @@ function App() {
   }, [session])
 
   const menuItems = [
-    'Dashboard',
-    'Mis negocios',
-    'Finanzas',
-    'Objetivos',
-    'Informes'
+    { id: 'Dashboard', icon: '◈', label: 'Dashboard', short: 'Inicio' },
+    { id: 'Mis negocios', icon: '▣', label: 'Mis negocios', short: 'Negocios' },
+    { id: 'Finanzas', icon: '◉', label: 'Finanzas', short: 'Finanzas' },
+    { id: 'Objetivos', icon: '◎', label: 'Objetivos', short: 'Metas' },
+    { id: 'Informes', icon: '▤', label: 'Informes', short: 'Informes' }
   ]
+
+  const cerrarSesion = async () => {
+    const { error } = await supabase.auth.signOut()
+
+    if (error) {
+      console.error('Error al cerrar sesión:', error.message)
+    }
+  }
 
   // ==========================================
   // NEGOCIOS
@@ -922,27 +929,27 @@ function App() {
 
       <aside className="sidebar">
 
-        <h2 className="logo">VÉRTIX<span>.</span></h2>
+        <h2 className="logo">
+          <span className="logo-full">VÉRTIX<span>.</span></span>
+          <span className="logo-mini">V<span>.</span></span>
+        </h2>
 
         <p className="menu-title">MENÚ PRINCIPAL</p>
 
         <nav>
           {menuItems.map(item => (
             <button
-              key={item}
+              key={item.id}
               className={
-                activePage === item
+                activePage === item.id
                   ? 'menu-button active'
                   : 'menu-button'
               }
-              onClick={() => setActivePage(item)}
+              onClick={() => setActivePage(item.id)}
             >
-              {item === 'Dashboard' && '◈'}
-              {item === 'Mis negocios' && '▣'}
-              {item === 'Finanzas' && '◉'}
-              {item === 'Objetivos' && '◎'}
-              {item === 'Informes' && '▤'}
-              {' '}{item}
+              <span className="menu-icon">{item.icon}</span>
+              <span className="menu-label">{item.label}</span>
+              <span className="menu-label-short">{item.short}</span>
             </button>
           ))}
         </nav>
@@ -953,20 +960,16 @@ function App() {
             className="menu-button"
             onClick={() => setActivePage('Configuración')}
           >
-            ⚙ Configuración
+            <span className="menu-icon">⚙</span>
+            <span className="menu-label">Configuración</span>
           </button>
 
           <button
             className="menu-button"
-            onClick={async () => {
-              const { error } = await supabase.auth.signOut()
-
-              if (error) {
-                console.error('Error al cerrar sesión:', error.message)
-              }
-            }}
+            onClick={cerrarSesion}
           >
-            ↪ Cerrar sesión
+            <span className="menu-icon">↪</span>
+            <span className="menu-label">Cerrar sesión</span>
           </button>
 
         </div>
@@ -982,12 +985,34 @@ function App() {
 
         <header className="topbar">
 
+          <div className="topbar-brand">VÉRTIX<span>.</span></div>
+
           <div className="topbar-title">
             <p className="greeting">
               PLATAFORMA DE GESTIÓN EMPRESARIAL
             </p>
 
             <h1>{activePage}</h1>
+          </div>
+
+          <div className="mobile-actions">
+            <button
+              className="mobile-action-button"
+              onClick={() => setActivePage('Configuración')}
+              aria-label="Configuración"
+              title="Configuración"
+            >
+              ⚙
+            </button>
+
+            <button
+              className="mobile-action-button"
+              onClick={cerrarSesion}
+              aria-label="Cerrar sesión"
+              title="Cerrar sesión"
+            >
+              ↪
+            </button>
           </div>
 
           <div className="profile">
