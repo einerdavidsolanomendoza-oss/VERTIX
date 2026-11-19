@@ -1,10 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "services": {
-    "app": {
-      "root": ".",
-      "framework": "vite"
-    },
     "vertix": {
       "root": "vertix",
       "framework": "vite"
@@ -13,9 +9,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": {
-        "service": "app"
-      }
+      "destination": { "service": "vertix" }
     }
   ]
 }
