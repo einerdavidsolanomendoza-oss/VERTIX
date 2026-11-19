@@ -256,9 +256,12 @@ function Auth() {
                 siteKey={siteKey}
                 onSuccess={(token) => setCaptchaToken(token)}
                 onExpire={() => setCaptchaToken('')}
-                onError={() => {
+                onError={(error) => {
+                  console.error('[Turnstile] error:', error)
                   setCaptchaToken('')
-                  setError('No fue posible cargar el CAPTCHA. Inténtalo de nuevo.')
+                  setError(
+                    `No fue posible cargar el CAPTCHA (código ${error}). Inténtalo de nuevo.`
+                  )
                 }}
               />
             </div>
