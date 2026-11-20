@@ -757,6 +757,14 @@ function App() {
 
   const [selectedReportPeriod, setSelectedReportPeriod] = useState('all')
 
+  const reportPeriodLabels = {
+    all: 'Todo el tiempo',
+    month: 'Este mes',
+    lastMonth: 'Mes anterior',
+    threeMonths: 'Últimos 3 meses',
+    year: 'Este año'
+  }
+
   const today = new Date()
 
   const reportTransactions = transactions.filter(transaction => {
@@ -816,8 +824,8 @@ function App() {
     : 0
 
   const businessReports = businesses.map(business => {
-    const movements = transactions.filter(
-      transaction => transaction.businessId === business.id
+    const movements = reportTransactions.filter(
+      transaction => String(transaction.businessId) === String(business.id)
     )
 
     const income = movements
@@ -1744,7 +1752,7 @@ function App() {
 
               <>
 
-                <div className="objective-business-selector">
+                <div className="objective-business-selector panel">
 
                   <label>Selecciona tu emprendimiento</label>
 
@@ -2081,15 +2089,15 @@ function App() {
 
               <div>
                 <label>Consultar informes de:</label>
-                <p>Selecciona un negocio o visualiza todos.</p>
+                <p>Elige un negocio y el período a analizar.</p>
               </div>
 
               <div className="period-filter">
-                <label>Negocio:</label>
+                <label>Período:</label>
                 <select
-                  value={selectedReportBusiness}
+                  value={selectedReportPeriod}
                   onChange={e =>
-                    setSelectedReportBusiness(e.target.value)
+                    setSelectedReportPeriod(e.target.value)
                   }
                 >
                   <option value="all">Todo el tiempo</option>
@@ -2101,6 +2109,7 @@ function App() {
               </div>
 
               <select
+                aria-label="Negocio"
                 value={selectedReportBusiness}
                 onChange={e =>
                   setSelectedReportBusiness(e.target.value)
@@ -2175,7 +2184,9 @@ function App() {
                   <h3>Ingresos vs. gastos</h3>
                 </div>
 
-                <span className="period">Resumen general</span>
+                <span className="period">
+                  {reportPeriodLabels[selectedReportPeriod]}
+                </span>
 
               </div>
 

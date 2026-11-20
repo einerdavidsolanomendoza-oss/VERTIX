@@ -146,22 +146,6 @@
   text-decoration: underline;
 }
 
-.auth-captcha {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-  min-height: 65px;
-}
-
-.auth-captcha-notice {
-  color: #a9a3bb;
-  font-size: 10px;
-  text-align: center;
-  padding: 10px;
-  border: 1px dashed #493064;
-  border-radius: 8px;
-}
-
 .auth-message {
   padding: 12px;
   border-radius: 8px;

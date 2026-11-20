@@ -1,6 +1,5 @@
 
 import { useState } from 'react'
-import { Turnstile } from '@marsidev/react-turnstile'
 import { supabase } from '../supabaseClient'
 
 function Auth() {
@@ -11,13 +10,9 @@ function Auth() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [aceptaTerminos, setAceptaTerminos] = useState(false)
   const [aceptaDatos, setAceptaDatos] = useState(false)
-  const [captchaToken, setCaptchaToken] = useState('')
-  const [captchaKey, setCaptchaKey] = useState(0)
   const [loading, setLoading] = useState(false)
   const [mensaje, setMensaje] = useState('')
   const [error, setError] = useState('')
-
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
   const cambiarModo = (nuevoModo) => {
     setMode(nuevoModo)
@@ -25,13 +20,6 @@ function Auth() {
     setError('')
     setPassword('')
     setConfirmPassword('')
-    setCaptchaToken('')
-    setCaptchaKey((actual) => actual + 1)
-  }
-
-  const reiniciarCaptcha = () => {
-    setCaptchaToken('')
-    setCaptchaKey((actual) => actual + 1)
   }
 
   const handleSubmit = async (e) => {
@@ -71,11 +59,6 @@ function Auth() {
       }
     }
 
-    if (siteKey && !captchaToken) {
-      setError('Completa la verificación CAPTCHA.')
-      return
-    }
-
     setLoading(true)
 
     try {
@@ -84,8 +67,7 @@ function Auth() {
       if (mode === 'login') {
         result = await supabase.auth.signInWithPassword({
           email: correo.trim(),
-          password,
-          options: siteKey ? { captchaToken } : undefined
+          password
         })
       }
 
@@ -94,7 +76,6 @@ function Auth() {
           email: correo.trim(),
           password,
           options: {
-            ...(siteKey ? { captchaToken } : {}),
             data: {
               nombre: nombre.trim(),
               acepta_terminos: aceptaTerminos,
@@ -105,10 +86,7 @@ function Auth() {
       }
 
       if (mode === 'recovery') {
-        result = await supabase.auth.resetPasswordForEmail(
-          correo.trim(),
-          siteKey ? { captchaToken } : {}
-        )
+        result = await supabase.auth.resetPasswordForEmail(correo.trim())
       }
 
       if (result?.error) {
@@ -137,7 +115,6 @@ function Auth() {
       setError(err.message || 'Ocurrió un error. Inténtalo nuevamente.')
     } finally {
       setLoading(false)
-      reiniciarCaptcha()
     }
   }
 
@@ -246,30 +223,6 @@ function Auth() {
             >
               ¿Olvidaste tu contraseña?
             </button>
-          )}
-
-          {siteKey && (
-            <div className="auth-captcha">
-              <Turnstile
-                key={captchaKey}
-                siteKey={siteKey}
-                onSuccess={(token) => setCaptchaToken(token)}
-                onExpire={() => setCaptchaToken('')}
-                onError={(error) => {
-                  console.error('[Turnstile] error:', error)
-                  setCaptchaToken('')
-                  setError(
-                    `No fue posible cargar el CAPTCHA (código ${error}). Inténtalo de nuevo.`
-                  )
-                }}
-              />
-            </div>
-          )}
-
-          {!siteKey && (
-            <p className="auth-captcha-notice">
-              CAPTCHA pendiente de configuración.
-            </p>
           )}
 
           {error && <div className="auth-message auth-error">{error}</div>}

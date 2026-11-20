@@ -34,6 +34,86 @@ iframe {
   letter-spacing: 1px;
 }
 
+/* ---------- Finanzas: tarjeta de selección centrada ---------- */
+.finance-selector {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.finance-selector label {
+  text-align: center;
+}
+
+.finance-selector select {
+  width: 100%;
+  max-width: 320px;
+  min-width: 0;
+}
+
+/* ---------- Objetivos: tarjeta de selección centrada ---------- */
+.objective-business-selector {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto 30px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.objective-business-selector label {
+  text-align: center;
+}
+
+.objective-business-selector select {
+  width: 100%;
+  max-width: 320px;
+  min-width: 0;
+}
+
+/* ---------- Dashboard: gráfico limpio, sin rectángulos ---------- */
+/* La leyenda antes era una caja translúcida; ahora es solo texto + puntos */
+.chart-legend {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  backdrop-filter: none;
+  gap: 16px;
+}
+
+/* El área de barras antes era un rectángulo con líneas de cuadrícula;
+   ahora solo conserva una línea base sutil */
+.bars {
+  background: transparent;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+/* Barras y etiquetas mejor distribuidas */
+.month-group {
+  gap: 6px;
+}
+
+.month-columns {
+  gap: 6px;
+}
+
+.income-bar,
+.expense-bar {
+  border-radius: 6px 6px 3px 3px;
+}
+
+.month-group > span {
+  margin-top: 9px;
+}
+
 /* ---------- Menú: icono + etiqueta separados ---------- */
 .menu-icon {
   width: 18px;
@@ -568,8 +648,7 @@ iframe {
 }
 
 /* =========================================================
-   MÓVIL MUY ESTRECHO (hasta 380px) — el widget de Turnstile
-   mide 300px y no cabe en la tarjeta sin escalarlo.
+   MÓVIL MUY ESTRECHO (hasta 380px)
    ========================================================= */
 @media (max-width: 380px) {
   .auth-card {
@@ -584,10 +663,4 @@ iframe {
     font-size: 20px;
   }
 
-  .auth-captcha {
-    transform: scale(0.85);
-    transform-origin: center top;
-    height: 56px;
-    margin: 6px 0;
-  }
 }
