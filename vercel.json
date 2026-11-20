@@ -1,5 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "env": {
+    "VITE_SUPABASE_URL": "https://ngptlqsptwzhcixkjjnm.supabase.co",
+    "VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_MzhkHuHk2jXvx4cPp-ZTQg_MkyirOP1"
+  },
+  "build": {
+    "env": {
+      "VITE_SUPABASE_URL": "https://ngptlqsptwzhcixkjjnm.supabase.co",
+      "VITE_SUPABASE_PUBLISHABLE_KEY": "sb_publishable_MzhkHuHk2jXvx4cPp-ZTQg_MkyirOP1"
+    }
+  },
   "services": {
     "vertix": {
       "root": "vertix",
